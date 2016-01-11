@@ -22,49 +22,6 @@ void enqueue(struct tree_node *ptr)
 
 }
 
-void dequeue()
-{
-	int index = my_q.back;
-	int max = my_q.front;
-	int i, outer_pad, inner_pad;
-
-	if (max < index)
-		max += TOTAL_ITEMS;
-
-	outer_pad = span/(int)pow(2, level);
-	inner_pad = (2 * outer_pad) + 1;
-
-	for (i = 0; i < outer_pad; i++)
-		printf("xxx");
-
-	for(; index < max; index++) {
-		struct tree_node *ptr = my_q.q[my_q.back++];
-
-		if (my_q.back == TOTAL_ITEMS)
-			my_q.back = 0;
-
-		if (ptr != NULL) {
-			printf("x%dx", ptr->val);
-
-			enqueue(ptr->left);
-			enqueue(ptr->right);
-		} else {
-			printf("x-x");
-			enqueue(NULL);
-			enqueue(NULL);
-		}
-
-		for(i = 0; i < inner_pad; i++)
-			printf("xxx");
-
-	}
-
-	for (i = 0; i < outer_pad; i++)
-		printf("xxx");
-
-	printf("\n");
-
-}
 
 bool onlynulls()
 {
@@ -79,7 +36,6 @@ bool onlynulls()
 	}
 
 	if (i == my_q.front) {
-		my_q.back = my_q.front;
 		return true;
 	}
 
@@ -90,10 +46,57 @@ bool onlynulls()
 bool empty()
 {
 
-	if (my_q.front == my_q.back || onlynulls())
+	if ((my_q.front == my_q.back) || onlynulls()) {
+		my_q.front = 0;
+		my_q.back = 0;
 		return true;
+	}
 	else
 		return false;
+
+}
+
+void dequeue()
+{
+	int index = my_q.back;
+	int max = my_q.front;
+	int i, outer_pad, inner_pad;
+
+	if (max < index)
+		max += TOTAL_ITEMS;
+
+	outer_pad = span/(int)pow(2, level);
+	inner_pad = (2 * outer_pad) + 1;
+
+	for (i = 0; i < outer_pad; i++)
+		printf("   ");
+
+	for(; index < max; index++) {
+		struct tree_node *ptr = my_q.q[my_q.back++];
+
+		if (my_q.back == TOTAL_ITEMS)
+			my_q.back = 0;
+
+		if (ptr != NULL) {
+			printf("%3d", ptr->val);
+
+			enqueue(ptr->left);
+			enqueue(ptr->right);
+		} else {
+			printf(" - ");
+			enqueue(NULL);
+			enqueue(NULL);
+		}
+
+		for(i = 0; i < inner_pad; i++)
+			printf("   ");
+
+	}
+
+	for (i = 0; i < outer_pad; i++)
+		printf("   ");
+
+	printf("\n");
 
 }
 
@@ -103,6 +106,7 @@ void pretty_print(struct tree_node *root)
 	span = pow(2, height) - 1;
 
 	level = 1;
+
 	enqueue(root);
 	while(1) {
 		if (empty())

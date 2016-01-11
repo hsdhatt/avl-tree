@@ -8,13 +8,14 @@ int height(struct tree_node **cur, struct tree_node **parent)
 
 	if (*cur == NULL)
 		return 0;
-back:
+
 	left_height = height(&(*cur)->left, cur) + 1;
 	right_height = height(&(*cur)->right, cur) + 1;
 
 	if (abs(left_height - right_height) > 1) {
 		rotate(cur, parent);
-		goto back;
+		left_height = height(&(*cur)->left, cur) + 1;
+		right_height = height(&(*cur)->right, cur) + 1;
 	}
 
 	(*cur)->left_height = left_height;
