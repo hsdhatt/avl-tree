@@ -11,7 +11,7 @@ void insert(struct tree_node **ptr, int input_val)
 		(*ptr)->left = NULL;
 		(*ptr)->right = NULL;
 		(*ptr)->height = -1;
-		printf("node %p val %d\n", *ptr, (*ptr)->val);
+		LOG("node %p val %d\n", *ptr, (*ptr)->val);
 		return;
 	}
 
@@ -32,7 +32,7 @@ void free_tree(struct tree_node *ptr)
 	free_tree(ptr->right);
 
 
-	printf("free ptr %p data %d\n", ptr, ptr->val);
+	LOG("free ptr %p data %d\n", ptr, ptr->val);
 	free(ptr);
 	return;
 }
@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
 		else {
 			if (rootptr == NULL) {
 				rootptr = (struct tree_node*)malloc(sizeof(*rootptr));
-				printf("root %p\n", rootptr);
 				rootptr->val = input_val;
 				rootptr->left = NULL;
 				rootptr->right = NULL;

@@ -22,6 +22,6 @@ int height(struct tree_node **cur, struct tree_node **parent)
 	(*cur)->right_height = right_height;
 	(*cur)->height = left_height > right_height ? left_height : right_height;
 
-	printf("val %d height %d\n", (*cur)->val, (*cur)->height);
+	LOG("val %d height %d\n", (*cur)->val, (*cur)->height);
 	return (*cur)->height;
 }

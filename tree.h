@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define LOG_ENABLE 0x0
+
 struct tree_node {
 	int val;
 	struct tree_node* left;
@@ -14,6 +16,12 @@ struct tree_node {
 #define LEFT_RIGHT	0x2
 #define RIGHT_RIGHT	0x3
 #define RIGHT_LEFT	0x4
+
+#define LOG(fmt, args...)\
+	do {\
+		if(LOG_ENABLE)\
+			printf(fmt, ##args);\
+	} while(0)
 
 void rotate(struct tree_node **cur, struct tree_node **parent_ptr);
 int height(struct tree_node **cur, struct tree_node **parent_ptr);
